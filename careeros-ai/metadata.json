@@ -1,0 +1,6 @@
+{
+  "name": "CareerOS AI",
+  "description": "Enterprise-grade AI Hiring + Career Intelligence Ecosystem with AI Interview Engine, Resume Analysis, and HR Intelligence Suite.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": []
+}

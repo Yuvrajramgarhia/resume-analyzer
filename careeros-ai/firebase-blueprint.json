@@ -1,0 +1,80 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["candidate", "recruiter"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "Resume": {
+      "title": "Resume",
+      "description": "Uploaded resume data parsed by AI",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "fileName": { "type": "string" },
+        "roleTarget": { "type": "string" },
+        "atsScore": { "type": "number" },
+        "parsedData": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" },
+        "status": { "type": "string", "enum": ["processing", "completed", "failed"] }
+      },
+      "required": ["userId", "fileName", "status", "createdAt", "updatedAt"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "Synchronized job listing from partner APIs",
+      "type": "object",
+      "properties": {
+        "companyId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "salaryRange": { "type": "string" },
+        "isRemote": { "type": "boolean" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["companyId", "title", "createdAt"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "A user-authorized job application submission",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "jobId": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "submitted", "interviewing", "rejected", "offer"] },
+        "tailoredResumeId": { "type": "string" },
+        "matchScore": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "jobId", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles"
+    },
+    "/resumes/{resumeId}": {
+      "schema": { "$ref": "#/entities/Resume" },
+      "description": "Parsed resumes and AI feedback"
+    },
+    "/jobs/{jobId}": {
+      "schema": { "$ref": "#/entities/Job" },
+      "description": "Synchronized Job Graph"
+    },
+    "/applications/{applicationId}": {
+      "schema": { "$ref": "#/entities/Application" },
+      "description": "Candidate Command Center Applications"
+    }
+  }
+}
